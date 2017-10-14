@@ -4,6 +4,7 @@
     "noUnusedLocals": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "outDir": "./target/scala-2.12/classes/assets/javascript",
     "noImplicitAny": true,
     "lib": [ "dom", "ES2017" ],
     "module": "ES2015",
