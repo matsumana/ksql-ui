@@ -1,6 +1,6 @@
 package info.matsumana.tsujun
 
-import akka.actor.{Actor, ActorLogging, Props}
+import akka.actor.{ Actor, ActorLogging, Props }
 
 object UserRegistryActor {
 
