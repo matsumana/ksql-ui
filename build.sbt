@@ -1,6 +1,7 @@
 lazy val akkaHttpVersion = "10.0.10"
 lazy val akkaVersion = "2.5.6"
 
+lazy val yarnLint = taskKey[Unit]("yarn lint")
 lazy val yarnBuildProd = taskKey[Unit]("yarn build for production")
 
 lazy val root = (project in file(".")).
@@ -18,6 +19,15 @@ lazy val root = (project in file(".")).
       "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
       "org.scalatest"     %% "scalatest"         % "3.0.1"         % Test
     ),
+    yarnLint := {
+      val s: TaskStreams = streams.value
+      val shell: Seq[String] = Seq("bash", "-c")
+      val command: Seq[String] = shell :+ "yarn lint"
+      s.log.info("Start yarn lint")
+      if ((command !) == 0) {
+        s.log.success("Finish yarn lint")
+      }
+    },
     yarnBuildProd := {
       val s: TaskStreams = streams.value
       val shell: Seq[String] = Seq("bash", "-c")
@@ -30,3 +40,4 @@ lazy val root = (project in file(".")).
   )
 
 assembly := (assembly dependsOn yarnBuildProd).value
+yarnBuildProd := (yarnBuildProd dependsOn yarnLint).value

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 export interface Props {
   content: string;
@@ -6,6 +6,6 @@ export interface Props {
 
 export default class Hello extends React.Component<Props, {}> {
   render() {
-    return <div>{this.props.content}</div>
+    return <div>{this.props.content}</div>;
   }
 }
