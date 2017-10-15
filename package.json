@@ -1,6 +1,5 @@
 {
   "name": "tsujun",
-  "private": true,
   "license": "MIT",
   "scripts": {
     "watch": "webpack -w --colors",
