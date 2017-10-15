@@ -26,6 +26,8 @@ trait Routes extends JsonSupport {
           }
         }
       }
+    } ~ path("favicon.ico") {
+      getFromResource("assets/favicon.ico")
     } ~ pathPrefix("assets") {
       getFromResourceDirectory("assets/")
     }
