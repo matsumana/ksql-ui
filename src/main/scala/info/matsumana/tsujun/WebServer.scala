@@ -1,6 +1,6 @@
 package info.matsumana.tsujun
 
-import akka.actor.ActorSystem
+import akka.actor.{ ActorRef, ActorSystem }
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Route
@@ -19,6 +19,7 @@ object WebServer extends Routes {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   lazy val r: Route = routes
+  override val dummyApiActor: ActorRef = system.actorOf(DummyApiActor.props, "dummyApiActor")
 
   def main(args: Array[String]) {
     val serverBindingFuture: Future[ServerBinding] = Http().bindAndHandle(r, "0.0.0.0", 8080)
