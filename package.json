@@ -3,36 +3,26 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "watch": "webpack -w --colors --config ./webpack.config.dev.js",
-    "lint": "tslint --format stylish 'src/main/javascript/**/*.ts{,x}'",
-    "build": "webpack --colors --config ./webpack.config.dev.js",
-    "build:prod": "webpack --config ./webpack.config.prod.js"
+    "watch": "webpack -w --colors",
+    "lint": "tslint --format stylish 'src/main/javascript/**/*.ts'",
+    "build": "webpack --colors",
+    "build:prod": "NODE_ENV=production webpack"
   },
-  "lint": "tslint 'src/**/*.ts{,x}'",
+  "lint": "tslint 'src/main/javascript/**/*.ts'",
   "dependencies": {
     "axios": "^0.16.2",
-    "material-ui": "^0.19.4",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
-    "react-redux": "^5.0.6",
-    "react-router": "^4.2.0",
-    "react-tap-event-plugin": "^2.0.1",
-    "redux": "^3.7.2",
-    "redux-form": "^7.1.1",
-    "redux-form-material-ui": "^4.3.0",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "vue": "^2.5.2",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@types/react": "^15.6.4",
-    "@types/react-dom": "^15.5.6",
-    "babel-core": "^6.26.0",
+    "css-loader": "^0.28.7",
     "ts-loader": "^2.3.7",
     "tslint": "^5.7.0",
     "tslint-config-airbnb": "^5.3.0",
     "tsutils": "^2.12.1",
     "typescript": "^2.5.3",
-    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
+    "vue-loader": "^13.3.0",
+    "vue-template-compiler": "^2.5.2",
     "watch": "^1.0.2",
     "webpack": "^3.7.1"
   }
