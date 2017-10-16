@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).
       organization := "info.matsumana",
       scalaVersion := "2.12.3"
     )),
-    name := "tsujun",
+    name := "ksql-ui",
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,

@@ -1,4 +1,4 @@
-package info.matsumana.tsujun
+package info.matsumana.ksqlui
 
 final case class HelloRequest(name: String)
 

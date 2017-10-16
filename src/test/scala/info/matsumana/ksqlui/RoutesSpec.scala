@@ -1,4 +1,4 @@
-package info.matsumana.tsujun
+package info.matsumana.ksqlui
 
 import akka.actor.ActorRef
 import akka.http.scaladsl.model._

@@ -1,4 +1,4 @@
-package info.matsumana.tsujun
+package info.matsumana.ksqlui
 
 import akka.actor.{ ActorRef, ActorSystem }
 import akka.event.Logging
@@ -7,7 +7,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.directives.MethodDirectives.get
 import akka.http.scaladsl.server.directives.RouteDirectives.complete
-import info.matsumana.tsujun.DummyApiActor.Start
+import info.matsumana.ksqlui.DummyApiActor.Start
 
 trait Routes extends JsonSupport {
 
