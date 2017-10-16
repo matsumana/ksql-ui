@@ -13,7 +13,7 @@ object WebServer extends Routes {
 
   // set up ActorSystem and other dependencies here
   implicit val system: ActorSystem = ActorSystem("akkaHttpServer")
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  override implicit val materializer: ActorMaterializer = ActorMaterializer()
 
   // Needed for the Future and its methods flatMap/onComplete in the end
   implicit val executionContext: ExecutionContext = system.dispatcher

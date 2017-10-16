@@ -5,6 +5,20 @@ export default Vue.extend({
   props: ['name', 'initialEnthusiasm'],
   data() {
     return {
+      ws: (() => {
+        const ws = new WebSocket('ws://localhost:8080/greeter');
+        ws.onopen = function () {
+          console.log('WebSocket onopen');
+        };
+        ws.onerror = function (error) {
+          console.log('WebSocket Error ' + error);
+        };
+        ws.onmessage = function (e) {
+          console.log('Server: ' + e.data);
+        };
+
+        return ws;
+      })(),
       enthusiasm: this.initialEnthusiasm,
     };
   },
@@ -28,6 +42,9 @@ export default Vue.extend({
       }).catch(error => {
         console.error(error);
       });
+    },
+    send() {
+      this.ws.send('hoge');
     },
   },
   computed: {

@@ -4,6 +4,7 @@
     <button @click="decrement">-</button>
     <button @click="increment">+</button>
     <button @click="post">post</button>
+    <button @click="send">send</button>
   </div>
 </template>
 
