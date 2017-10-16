@@ -10,7 +10,7 @@ new Vue({
     </div>
     `,
   data: {
-    name: 'World'
+    name: 'World',
   },
   components: {
     HelloComponent,
