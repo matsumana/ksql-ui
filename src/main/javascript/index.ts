@@ -9,7 +9,9 @@ new Vue({
         <hello-component :name="name" :initialEnthusiasm="5" />
     </div>
     `,
-  data: { name: 'World' },
+  data: {
+    name: 'World'
+  },
   components: {
     HelloComponent,
   },
