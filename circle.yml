@@ -1,0 +1,11 @@
+dependencies:
+  pre:
+    - yarn install
+  override:
+    - sbt test:compile
+    - yarn build:prod
+
+test:
+  override:
+    - sbt test:test
+    - yarn lint
