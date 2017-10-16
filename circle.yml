@@ -10,6 +10,8 @@ dependencies:
   override:
     - sbt test:compile
     - yarn build:prod
+  cache_directories:
+    - ~/.cache/yarn
 
 test:
   override:
