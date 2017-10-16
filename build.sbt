@@ -26,6 +26,8 @@ lazy val root = (project in file(".")).
       s.log.info("Start yarn lint")
       if ((command !) == 0) {
         s.log.success("Finish yarn lint")
+      } else {
+        throw new IllegalStateException("Fail yarn lint")
       }
     },
     yarnBuildProd := {
@@ -35,6 +37,8 @@ lazy val root = (project in file(".")).
       s.log.info("Start yarn build:prod")
       if ((command !) == 0) {
         s.log.success("Finish yarn build:prod")
+      } else {
+        throw new IllegalStateException("Fail yarn build:prod")
       }
     }
   )
