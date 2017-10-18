@@ -11,6 +11,7 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.3"
     )),
     name := "ksql-ui",
+    version := "0.1.0-SNAPSHOT",
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
       "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpVersion,
