@@ -6,7 +6,7 @@ new Vue({
   template: `
     <div>
         Name: <input v-model="name" type="text">
-        <hello-component :name="name" :initialEnthusiasm="5" />
+        <hello-component :name="name" :enthusiasm="5" />
     </div>
     `,
   data: {
