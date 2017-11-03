@@ -8,11 +8,7 @@
   </div>
 </template>
 
-<script lang="ts">
-  import Hello from './Hello'
-
-  export default Hello;
-</script>
+<script lang="ts" src="./Hello.ts"></script>
 
 <style>
   .greeting {

@@ -6,6 +6,8 @@
     "target": "ES5",
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "experimentalDecorators": true
   }
 }
