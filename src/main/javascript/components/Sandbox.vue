@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script lang="ts" src="./Hello.ts"></script>
+<script lang="ts" src="./Sandbox.ts"></script>
 
 <style>
   .greeting {

@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Hello from './components/Hello';
+import Sandbox from './components/Sandbox';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/', component: Hello,
+    path: '/', component: Sandbox,
   },
 ];
 

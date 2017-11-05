@@ -4,7 +4,7 @@ import { ACTION } from '../store/action-types';
 import store from '../store';
 
 @Component
-export default class Hello extends Vue {
+export default class Sandbox extends Vue {
 
   // --- input field -----------------------------------------
   userName: string = '';

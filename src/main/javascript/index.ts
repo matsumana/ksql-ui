@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import store from './store';
 import router from './router';
-import Hello from './components/Hello.vue';
+import Sandbox from './components/Sandbox.vue';
 
 new Vue({
   router,
   store,
-  render: h => h(Hello),
+  render: h => h(Sandbox),
 }).$mount('#app');
