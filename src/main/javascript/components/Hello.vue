@@ -1,10 +1,23 @@
 <template>
   <div>
-    <div class="greeting">Hello {{name}}{{exclamationMarks}}</div>
-    <button @click="decrement">-</button>
-    <button @click="increment">+</button>
-    <button @click="post">post</button>
-    <button @click="send">send</button>
+    <div>
+      Name: <input type="text" v-model="userName" @input="inputName">
+    </div>
+    <div>
+      <div class="greeting">Hello {{userName}}{{exclamationMarks}}</div>
+      <button @click="decrement">-</button>
+      <button @click="increment">+</button>
+    </div>
+    <br>
+    <div>
+      <button @click="post">post</button>
+      {{postResponse}}
+    </div>
+    <br>
+    <div>
+      <button @click="send">send</button>
+      {{wsResponse}}
+    </div>
   </div>
 </template>
 

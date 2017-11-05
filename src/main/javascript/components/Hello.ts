@@ -1,63 +1,45 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import axios from 'axios';
+import { ACTION } from '../store/action-types';
+import store from '../store';
 
-@Component({
-  props: {
-    name: String,
-    enthusiasm: Number,
-  },
-})
+@Component
 export default class Hello extends Vue {
-  name: string;
-  enthusiasm: number;
-  ws: WebSocket;
 
-  constructor() {
-    super();
-
-    this.ws = new WebSocket('ws://localhost:8080/greeter');
-    this.ws.onopen = function () {
-      console.log('WebSocket onopen');
-    };
-    this.ws.onerror = function (error) {
-      console.log('WebSocket Error ' + error);
-    };
-    this.ws.onmessage = function (e) {
-      console.log('Server: ' + e.data);
-    };
-  }
+  // --- input field -----------------------------------------
+  userName: string = '';
 
   // --- method ----------------------------------------------
-  increment() {
-    this.enthusiasm = this.enthusiasm + 1;
+  inputName(): void {
+    store.dispatch(ACTION.INPUT_NAME, this.userName);
   }
 
-  decrement() {
-    if (this.enthusiasm > 1) {
-      this.enthusiasm = this.enthusiasm - 1;
-    }
+  increment(): void {
+    store.dispatch(ACTION.INCREMENT);
   }
 
-  post() {
-    const url = 'http://localhost:8080/hello';
-    const param: { [key: string]: string; } = {
-      name: this.name,
-    };
-
-    axios.post(url, param).then((response) => {
-      console.log(response.data);
-    }).catch(error => {
-      console.error(error);
-    });
+  decrement(): void {
+    store.dispatch(ACTION.DECREMENT);
   }
 
-  send() {
-    this.ws.send('hoge');
+  post(): void {
+    store.dispatch(ACTION.HTTP_POST);
+  }
+
+  send(): void {
+    store.dispatch(ACTION.WS_SEND);
   }
 
   // --- computed --------------------------------------------
   get exclamationMarks(): string {
-    return Array(this.enthusiasm + 1).join('!');
+    return store.getters.exclamationMarks;
+  }
+
+  get postResponse(): string {
+    return store.getters.postResponse;
+  }
+
+  get wsResponse(): string {
+    return store.getters.wsResponse;
   }
 }

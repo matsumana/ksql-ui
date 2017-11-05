@@ -1,18 +1,10 @@
 import Vue from 'vue';
-import HelloComponent from './components/Hello.vue';
+import store from './store';
+import router from './router';
+import Hello from './components/Hello.vue';
 
 new Vue({
-  el: '#app',
-  template: `
-    <div>
-        Name: <input v-model="name" type="text">
-        <hello-component :name="name" :enthusiasm="5" />
-    </div>
-    `,
-  data: {
-    name: 'World',
-  },
-  components: {
-    HelloComponent,
-  },
-});
+  router,
+  store,
+  render: h => h(Hello),
+}).$mount('#app');
