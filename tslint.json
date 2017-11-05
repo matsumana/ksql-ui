@@ -5,6 +5,7 @@
     "object-shorthand-properties-first": false,
     "radix": false,
     "ter-arrow-parens": false,
-    "import-name": false
+    "import-name": false,
+    "function-name": false
   }
 }
