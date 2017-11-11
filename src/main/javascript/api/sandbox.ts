@@ -1,4 +1,7 @@
+import { ActionContext } from 'vuex';
 import axios from 'axios';
+import { State } from '../store';
+import { MUTATION } from '../store/mutation-types';
 
 const HTTP_URL = 'http://localhost:8080/hello';
 const WS_URL = 'ws://localhost:8080/greeter';
@@ -6,6 +9,7 @@ const WS_URL = 'ws://localhost:8080/greeter';
 export class Sandbox {
 
   private ws: WebSocket;
+  private store: ActionContext<State, State>;
 
   constructor() {
     this.initWs();
@@ -13,16 +17,18 @@ export class Sandbox {
 
   private initWs() {
     this.ws = new WebSocket(WS_URL);
+
     this.ws.onopen = () => {
       console.log('WebSocket onopen');
     };
+
     this.ws.onerror = (ev: Event) => {
       console.log('WebSocket Error ' + ev);
     };
 
-    // FIXME can't handle onmessage, when click a button
     this.ws.onmessage = (ev: MessageEvent) => {
       console.log('Server: ' + ev.data);
+      this.store.commit(MUTATION.WS_RECEIVE, ev.data);
     };
   }
 
@@ -39,10 +45,8 @@ export class Sandbox {
     });
   }
 
-  send(value: string, callback: (ev: MessageEvent) => void): void {
-    // FIXME can't handle onmessage, when click a button
-    // this.ws.onmessage = callback;
-    console.log(callback);
+  send(store: ActionContext<State, State>, value: string): void {
+    this.store = store;
     this.ws.send(value);
   }
 }

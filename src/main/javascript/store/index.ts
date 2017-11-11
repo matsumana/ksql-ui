@@ -6,7 +6,7 @@ import { Sandbox } from '../api/sandbox';
 
 Vue.use(Vuex);
 
-class State {
+export class State {
   userName: string = '';
   enthusiasm: number = 0;
   postResponse: string = '';
@@ -31,9 +31,7 @@ const actions = <ActionTree<State, any>> {
     });
   },
   [ACTION.WS_SEND](store: ActionContext<State, State>) {
-    sandbox.send(store.state.userName, (ev: MessageEvent) => {
-      store.commit(MUTATION.WS_SEND, ev.data);
-    });
+    sandbox.send(store, store.state.userName);
   },
 };
 
@@ -52,7 +50,7 @@ const mutations = <MutationTree<State>> {
   [MUTATION.HTTP_POST](state: State, value: string) {
     state.postResponse = value;
   },
-  [MUTATION.WS_SEND](state: State, value: string) {
+  [MUTATION.WS_RECEIVE](state: State, value: string) {
     state.wsResponse = value;
   },
 };
