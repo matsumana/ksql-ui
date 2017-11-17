@@ -2,32 +2,6 @@
   <div>
     <div class="tile is-parent">
       <article class="tile is-child box">
-        <brace
-          style="min-height: 500px; min-width: 100%"
-          :theme="'chrome'"
-          :mode="'sql'"
-          @code-change="oncodeChange">
-        </brace>
-      </article>
-    </div>
-    <div class="tile is-parent">
-      <div class="control is-grouped">
-        <div class="control">
-          <a class="button is-primary" @click="submit">Submit</a>
-          <!--
-          Acutually, brace is having itself value internally. so brace has methods both setValue and getValue.
-          However, Brace.vue doen't provide a method calling brace's setValue method.
-          Therefore, I can't implemente this feature.
-          -->
-          <!--<a class="button" @click="cancel">Cancel</a>-->
-        </div>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="tile is-parent">
-      <article class="tile is-child box">
         <div>SQL</div>
         <pre>SELECT * FROM pageviews_female LIMIT 3</pre>
         <br>
@@ -112,8 +86,7 @@ Stream created and running</pre>
   </div>
 </template>
 
-<style lang="sass" src="bulma"></style>
 <style lang="scss">
 </style>
 
-<script lang="ts" src="./App.ts"></script>
+<script lang="ts" src="./Result.ts"></script>

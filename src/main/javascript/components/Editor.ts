@@ -9,7 +9,7 @@ import store from '../store';
     Brace,
   },
 })
-export default class App extends Vue {
+export default class Editor extends Vue {
 
   // --- input field -----------------------------------------
   sql = '';
@@ -27,10 +27,5 @@ export default class App extends Vue {
 
   submit() {
     store.dispatch(ACTION.SUBMIT);
-  }
-
-  // --- computed --------------------------------------------
-  get results(): string {
-    return store.getters.results;
   }
 }
