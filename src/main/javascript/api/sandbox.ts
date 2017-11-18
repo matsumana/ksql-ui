@@ -1,6 +1,6 @@
 import { ActionContext } from 'vuex';
 import axios from 'axios';
-import { State } from '../store';
+import { State } from '../store/State';
 import { MUTATION } from '../store/mutation-types';
 
 const HTTP_URL = 'http://localhost:8080/hello';

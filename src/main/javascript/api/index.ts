@@ -1,5 +1,5 @@
 import { ActionContext } from 'vuex';
-import { State } from '../store';
+import { State } from '../store/State';
 import { MUTATION } from '../store/mutation-types';
 
 export class Api {

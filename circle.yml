@@ -17,3 +17,4 @@ test:
   override:
     - sbt test:test
     - yarn lint
+    - yarn test
