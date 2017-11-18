@@ -1,19 +1,55 @@
 import * as assert from 'power-assert';
 import { convertToJsonObj } from '../../../main/javascript/store/mutations';
+import { ResultTable } from '../../../main/javascript/store/model/ResultTable';
+import { ResultText } from '../../../main/javascript/store/model/ResultText';
 
 describe('mutations', () => {
-  it('convert CREATE statement response', () => {
+  it('convert from CREATE response', () => {
     const json: string = `{
-      "mode": 0,
-      "sequence": 10,
-      "sql": "CREATE STREAM pageviews_female AS SELECT users_original.userid AS userid, pageid, regionid, gender FROM pageviews_original LEFT JOIN users_original ON pageviews_original.userid = users_original.userid WHERE gender = 'FEMALE'",
-      "text": "Message\\n----------------------------\\nStream created and running"
-      }`;
+  "mode": 0,
+  "sequence": 10,
+  "sql": "CREATE STREAM pageviews_xx AS SELECT userid FROM pageviews",
+  "text": "Message\\n----------------------------\\nStream created and running"
+}`;
 
-    const jsonObj = convertToJsonObj(json);
+    const jsonObj = convertToJsonObj(json) as ResultText;
 
     assert.equal(jsonObj.mode, 0);
     assert.equal(jsonObj.sequence, 10);
-    assert.equal(jsonObj.sql.substring(0, 13), 'CREATE STREAM');
+    assert.equal(jsonObj.sql, 'CREATE STREAM pageviews_xx AS SELECT userid FROM pageviews');
+    assert.equal(jsonObj.text, 'Message\n----------------------------\nStream created and running');
+  });
+
+  it('convert from SELECT response', () => {
+    const json: string = `{
+  "mode": 1,
+  "sequence": 11,
+  "sql": "SELECT * FROM pageviews_female LIMIT 3",
+  "title": [
+    "col1", "col2", "col3", "col4"
+  ],
+  "data": [
+    [ "aaa1", "bbb1", "ccc1", "ddd1" ],
+    [ "aaa2", "bbb2", "ccc2", "ddd2" ],
+    [ "aaa3", "bbb3", "ccc3", "ddd3" ]
+  ]
+}`;
+
+    const jsonObj = convertToJsonObj(json) as ResultTable;
+
+    assert.equal(jsonObj.mode, 1);
+    assert.equal(jsonObj.sequence, 11);
+    assert.equal(jsonObj.sql, 'SELECT * FROM pageviews_female LIMIT 3');
+    assert.equal(jsonObj.title.length, 4);
+    assert.equal(jsonObj.title[0], 'col1');
+    assert.equal(jsonObj.title[1], 'col2');
+    assert.equal(jsonObj.title[2], 'col3');
+    assert.equal(jsonObj.title[3], 'col4');
+    assert.equal(jsonObj.data.length, 3);
+    assert.equal(jsonObj.data[0].length, 4);
+    assert.equal(jsonObj.data[0][0], 'aaa1');
+    assert.equal(jsonObj.data[0][1], 'bbb1');
+    assert.equal(jsonObj.data[0][2], 'ccc1');
+    assert.equal(jsonObj.data[0][3], 'ddd1');
   });
 });
