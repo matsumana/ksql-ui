@@ -14,6 +14,6 @@ describe('mutations', () => {
 
     assert.equal(jsonObj.mode, 0);
     assert.equal(jsonObj.sequence, 10);
-    assert.equal(jsonObj.sql.substring(0, 13), 'CREATE STREAMxxx');
+    assert.equal(jsonObj.sql.substring(0, 13), 'CREATE STREAM');
   });
 });
