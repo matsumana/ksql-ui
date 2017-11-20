@@ -1,4 +1,4 @@
-import { ResultBase } from './model/ResultBase';
+import { ResponseBase } from './model/ResponseBase';
 
 export class State {
   // sandbox
@@ -8,6 +8,7 @@ export class State {
   wsResponse = '';
 
   // App
+  sequence = 0;
   sql = '';
-  results: ResultBase[] = [];
+  results: ResponseBase[] = [];
 }

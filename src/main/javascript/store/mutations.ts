@@ -1,7 +1,6 @@
 import { MutationTree } from 'vuex';
 import { MUTATION } from './mutation-types';
 import { State } from './State';
-import { ResultBase } from './model/ResultBase';
 
 const mutations = <MutationTree<State>> {
   // sandbox
@@ -30,31 +29,15 @@ const mutations = <MutationTree<State>> {
   // [MUTATION.CANCEL](state: State, sql: string) {
   //   state.sql = sql;
   // },
-  [MUTATION.WS_ON_MESSAGE](state: State, result: string) {
-    // TODO
-    // state.results = result;
-    console.log(result);
-    const jsonObj: ResultBase = convertToJsonObj('{\n' +
-        '  "mode": 0,\n' +
-        '  "sequence": 10,\n' +
-        '  "sql": "CREATE STREAM pageviews_female' +
-        ' AS ' +
-        'SELECT users_original.userid AS userid,' +
-        ' pageid, regionid, gender' +
-        ' FROM pageviews_original' +
-        ' LEFT JOIN users_original' +
-        ' ON pageviews_original.userid = users_original.userid WHERE gender = \'FEMALE\'",\n' +
-        '  "text": "Message\\n----------------------------\\nStream created and running"\n' +
-        '}\n');
-    console.log(jsonObj);
-    state.results.unshift(jsonObj);
-    console.log(state.results.length);
-    console.log(jsonObj.mode);
+  [MUTATION.SUBMIT](state: State) {
+    state.sequence = state.sequence + 1;
   },
-};
-
-export const convertToJsonObj = (json: string): ResultBase => {
-  return JSON.parse(json);
+  [MUTATION.WS_ON_MESSAGE](state: State, json: string) {
+    const obj = JSON.parse(json);
+    console.log(obj);
+    state.results.unshift(obj);
+    console.log(state.results);
+  },
 };
 
 export default mutations;

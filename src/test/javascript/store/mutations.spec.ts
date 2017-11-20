@@ -1,7 +1,6 @@
 import * as assert from 'power-assert';
-import { convertToJsonObj } from '../../../main/javascript/store/mutations';
-import { ResultTable } from '../../../main/javascript/store/model/ResultTable';
-import { ResultText } from '../../../main/javascript/store/model/ResultText';
+import { ResponseTable } from '../../../main/javascript/store/model/ResponseTable';
+import { ResponseText } from '../../../main/javascript/store/model/ResponseText';
 
 describe('mutations', () => {
   it('convert from CREATE response', () => {
@@ -12,7 +11,7 @@ describe('mutations', () => {
   "text": "Message\\n----------------------------\\nStream created and running"
 }`;
 
-    const jsonObj = convertToJsonObj(json) as ResultText;
+    const jsonObj = JSON.parse(json) as ResponseText;
 
     assert.equal(jsonObj.mode, 0);
     assert.equal(jsonObj.sequence, 10);
@@ -35,7 +34,7 @@ describe('mutations', () => {
   ]
 }`;
 
-    const jsonObj = convertToJsonObj(json) as ResultTable;
+    const jsonObj = JSON.parse(json) as ResponseTable;
 
     assert.equal(jsonObj.mode, 1);
     assert.equal(jsonObj.sequence, 11);
