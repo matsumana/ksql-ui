@@ -2,6 +2,7 @@ lazy val akkaHttpVersion = "10.0.10"
 lazy val akkaVersion = "2.5.6"
 
 lazy val yarnLint = taskKey[Unit]("yarn lint")
+lazy val yarnTest = taskKey[Unit]("yarn test")
 lazy val yarnBuildProd = taskKey[Unit]("yarn build for production")
 
 lazy val root = (project in file(".")).
@@ -31,6 +32,17 @@ lazy val root = (project in file(".")).
         throw new IllegalStateException("Fail yarn lint")
       }
     },
+    yarnTest := {
+      val s: TaskStreams = streams.value
+      val shell: Seq[String] = Seq("bash", "-c")
+      val command: Seq[String] = shell :+ "yarn test"
+      s.log.info("Start yarn test")
+      if ((command !) == 0) {
+        s.log.success("Finish yarn test")
+      } else {
+        throw new IllegalStateException("Fail yarn test")
+      }
+    },
     yarnBuildProd := {
       val s: TaskStreams = streams.value
       val shell: Seq[String] = Seq("bash", "-c")
@@ -45,4 +57,5 @@ lazy val root = (project in file(".")).
   )
 
 assembly := (assembly dependsOn yarnBuildProd).value
-yarnBuildProd := (yarnBuildProd dependsOn yarnLint).value
+yarnBuildProd := (yarnBuildProd dependsOn yarnTest).value
+yarnTest := (yarnTest dependsOn yarnLint).value
