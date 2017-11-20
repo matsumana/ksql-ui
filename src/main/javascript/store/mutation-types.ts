@@ -7,6 +7,7 @@ const WS_RECEIVE = 'WS_RECEIVE';
 
 // App
 const INPUT_SQL = 'INPUT_SQL';
+const SUBMIT = 'SUBMIT';
 const WS_ON_MESSAGE = 'WS_ON_MESSAGE';
 // const CANCEL = 'CANCEL';
 
@@ -20,6 +21,7 @@ export const MUTATION = {
 
   // App
   INPUT_SQL,
+  SUBMIT,
   WS_ON_MESSAGE,
   // CANCEL,
 };

@@ -11,6 +11,9 @@ import scala.io.StdIn
 
 object WebServer extends Routes {
 
+  val BIND_HOST = "0.0.0.0"
+  val BIND_PORT = 8080
+
   // set up ActorSystem and other dependencies here
   implicit val system: ActorSystem = ActorSystem("akkaHttpServer")
   override implicit val materializer: ActorMaterializer = ActorMaterializer()
@@ -22,9 +25,9 @@ object WebServer extends Routes {
   override val dummyApiActor: ActorRef = system.actorOf(DummyApiActor.props, "dummyApiActor")
 
   def main(args: Array[String]) {
-    val serverBindingFuture: Future[ServerBinding] = Http().bindAndHandle(r, "0.0.0.0", 8080)
+    val serverBindingFuture: Future[ServerBinding] = Http().bindAndHandle(r, BIND_HOST, BIND_PORT)
 
-    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+    println(s"Server online at http://$BIND_HOST:$BIND_PORT/\nPress RETURN to stop...")
 
     StdIn.readLine()
 

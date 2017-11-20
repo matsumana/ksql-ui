@@ -36,7 +36,9 @@ const actions = <ActionTree<State, any>> {
   //   store.commit(MUTATION.CANCEL, sql);
   // },
   [ACTION.SUBMIT](store: ActionContext<State, State>) {
-    api.submit(store, store.state.sql);
+    api.submit(store, store.state.sequence, store.state.sql, () => {
+      store.commit(MUTATION.SUBMIT);
+    });
   },
 };
 
