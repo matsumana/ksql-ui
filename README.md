@@ -29,7 +29,7 @@ $ cd /path/to/ksql-ui
 $ yarn install
 ```
 
-# How to launch this app in your local environment
+# How to launch in local
 
 ```
 $ cd /path/to/ksql-ui
@@ -53,26 +53,22 @@ Either doesn't no problem, but `yarn watch` seems useful more than `yarn build`.
 ```
 $ cd /path/to/ksql-ui
 $ yarn watch
-yarn run v1.2.1
-$ webpack -w --colors
-
-Webpack is watching the files…
-
-ts-loader: Using typescript@2.5.3 and /path/to/ksql-ui/tsconfig.json
-Hash: 22b35ac05bd845519185
-Version: webpack 3.7.1
-Time: 2260ms
-    Asset    Size  Chunks                    Chunk Names
-bundle.js  976 kB       0  [emitted]  [big]  main
-   [4] (webpack)/buildin/global.js 509 bytes {0} [built]
-  [10] ./src/main/javascript/index.ts 383 bytes {0} [built]
-    + 40 hidden modules
 ```
 
-# How to build assemply jar file for production and launch it
+After that, an archive will be generated to `target/universal`
+
+# How to launch in production
+
+## package
 
 ```
 $ cd /path/to/ksql-ui
-$ sbt clean assembly
-$ java -jar ./target/scala-2.12/ksql-ui-assembly-*.jar
+$ sbt clean universal:packageZipTarball
+```
+
+## launch
+
+```
+$ tar xvf ksql-ui-x.x.x.tgz
+$ APPLICATION_SECRET=your_secret ./ksql-ui-x.x.x/bin/ksql-ui
 ```
