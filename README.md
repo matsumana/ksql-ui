@@ -37,10 +37,16 @@ $ sbt
 [info] Loading global plugins from /path/to/.sbt/0.13/plugins
 [info] Loading project definition from /path/to/ksql-ui/project
 [info] Set current project to ksql-ui (in build file:/path/to/ksql-ui/)
-> run
-[info] Running info.matsumana.ksqlui.WebServer
-Server online at http://localhost:8080/
-Press RETURN to stop...```
+[ksql-ui] $ run
+[info] Updating {file:/path/to/ksql-ui/}root...
+[info] Resolving jline#jline;2.14.4 ...
+[info] Done updating.
+
+--- (Running the application, auto-reloading is enabled) ---
+
+[info] p.c.s.AkkaHttpServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+(Server started, use Enter to stop and go back to the console...)
 ```
 
 __Caution__
