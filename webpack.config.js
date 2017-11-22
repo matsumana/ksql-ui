@@ -2,9 +2,9 @@ const webpack = require('webpack');
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 module.exports = {
-  entry: "./src/main/javascript/index.ts",
+  entry: "./ui/src/main/javascript/index.ts",
   output: {
-    path: `${__dirname}/target/scala-2.12/classes/assets/javascript`,
+    path: `${__dirname}/public/javascripts`,
     filename: 'bundle.js'
   },
   module: {
