@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./public/javascripts",
     "moduleResolution": "node",
     "module": "ES2015",
     "target": "ES5",
