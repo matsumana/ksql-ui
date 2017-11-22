@@ -6,7 +6,7 @@
     "lint": "tslint --format stylish 'src/main/javascript/**/*.ts'",
     "build": "webpack --colors",
     "build:prod": "NODE_ENV=production webpack",
-    "test": "ts-mocha -p src/test/javascript --compilers ts:espower-typescript/guess ./**/*.spec.ts"
+    "test": "ts-mocha -p ui/src/test/javascript --compilers ts:espower-typescript/guess ./**/*.spec.ts"
   },
   "directories": {
     "test": "src/test/javascript"
