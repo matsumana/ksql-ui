@@ -37,6 +37,7 @@
     "uglify-es-webpack-plugin": "^0.10.0",
     "vue-class-component": "^6.1.0",
     "vue-loader": "^13.3.0",
+    "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.5.2",
     "watch": "^1.0.2",
     "webpack": "^3.7.1"

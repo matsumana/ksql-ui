@@ -34,9 +34,7 @@ const mutations = <MutationTree<State>> {
   },
   [MUTATION.WS_ON_MESSAGE](state: State, json: string) {
     const obj = JSON.parse(json);
-    console.log(obj);
     state.results.unshift(obj);
-    console.log(state.results);
   },
 };
 
