@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./target/scala-2.12/classes/assets/javascript",
+    "outDir": "./public/javascripts",
     "moduleResolution": "node",
     "module": "ES2015",
     "target": "ES5",
