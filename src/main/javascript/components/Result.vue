@@ -1,7 +1,22 @@
 <template>
   <div>
-    <result-text></result-text>
-    <result-table></result-table>
+    <div v-for="result in results">
+      <result-text
+        v-if="result.mode === 0"
+        :sequence="result.sequence"
+        :sql="result.sql"
+        :mode="result.mode"
+        :text="result.text">
+      </result-text>
+      <result-table
+        v-if="result.mode !== 0"
+        :sequence="result.sequence"
+        :sql="result.sql"
+        :mode="result.mode"
+        :title="result.title"
+        :data="result.data">
+      </result-table>
+    </div>
   </div>
 </template>
 

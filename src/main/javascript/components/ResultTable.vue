@@ -3,69 +3,25 @@
     <div class="tile is-parent">
       <article class="tile is-child box">
         <div>SQL</div>
-        <pre>SELECT * FROM pageviews_female LIMIT 3</pre>
+        <pre>{{ sql }}</pre>
         <br>
         <div>Result</div>
         <table class="table is-bordered is-striped is-narrow">
           <thead>
           <tr>
             <th></th>
-            <th>Col1</th>
-            <th>Col2</th>
-            <th>Col3</th>
-            <th>Col4</th>
+            <th v-for="col in title">
+              {{ col }}
+            </th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td class="is-icon">
-              1
-            </td>
+          <tr v-for="(row, index) in data">
             <td>
-              aaa
+              {{ index + 1 }}
             </td>
-            <td>
-              bbb
-            </td>
-            <td>
-              ccc
-            </td>
-            <td>
-              ddd
-            </td>
-          </tr>
-          <tr>
-            <td class="is-icon">
-              2
-            </td>
-            <td>
-              aaa
-            </td>
-            <td>
-              bbb
-            </td>
-            <td>
-              ccc
-            </td>
-            <td>
-              ddd
-            </td>
-          </tr>
-          <tr>
-            <td class="is-icon">
-              3
-            </td>
-            <td>
-              aaa
-            </td>
-            <td>
-              bbb
-            </td>
-            <td>
-              ccc
-            </td>
-            <td>
-              ddd
+            <td v-for="(col, index) in row">
+              {{ col }}
             </td>
           </tr>
           </tbody>
@@ -77,3 +33,5 @@
 
 <style lang="scss">
 </style>
+
+<script lang="ts" src="./ResultTable.ts"></script>
