@@ -1,9 +1,16 @@
 package models
 
-case class ResponseTable[A](
+import play.api.libs.json.JsString
+import play.api.libs.json.Json
+import play.api.libs.json.OWrites
+
+case class ResponseTable(
   sequence: Int,
   sql: String,
   mode: Int = 1,
-  title: Seq[String],
-  data: Seq[A]
+  data: Seq[JsString]
 )
+
+object ResponseTable {
+  implicit def writes: OWrites[ResponseTable] = Json.writes[ResponseTable]
+}
