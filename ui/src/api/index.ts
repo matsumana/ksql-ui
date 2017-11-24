@@ -3,7 +3,7 @@ import { State } from '../store/State';
 import { MUTATION } from '../store/mutation-types';
 import { Request as Req } from '../store/model/Request';
 
-const WS_URL = `ws://${window.location.host}/sql`;
+const WS_URL = `ws://${window.location.host}/query`;
 
 export class Api {
 
@@ -33,6 +33,7 @@ export class Api {
   submit(store: ActionContext<State, State>, sequence: number, sql: string, callback: () => void) {
     this.store = store;
 
+    console.log('submit!');
     const requeset = new Req();
     requeset.sequence = sequence;
     requeset.sql = sql;
