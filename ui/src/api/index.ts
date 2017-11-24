@@ -3,7 +3,7 @@ import { State } from '../store/State';
 import { MUTATION } from '../store/mutation-types';
 import { Request as Req } from '../store/model/Request';
 
-const WS_URL = `ws://${window.location.host}/sql`;
+const WS_URL = `ws://${window.location.host}/query`;
 
 export class Api {
 
