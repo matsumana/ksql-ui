@@ -1,61 +1,47 @@
 package actors
 
-import actors.Client.Select
 import akka.actor.Actor
 import akka.actor.ActorLogging
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
 import akka.actor.Props
-import akka.http.scaladsl.Http
+import akka.actor._
 import akka.http.scaladsl.model._
-import akka.pattern.pipe
 import akka.stream.ActorMaterializer
 import akka.stream.ActorMaterializerSettings
 import akka.util.ByteString
+import models.ksql.KSQLResponse
+import play.api.libs.json.JsError
+import play.api.libs.json.JsSuccess
+import play.api.libs.json.JsValue
 import play.api.libs.json.Json
-import play.api.libs.json.OFormat
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.Try
 
-import akka.actor._
-
-object MyWebSocketActor {
-  def props(out: ActorRef) = Props(new MyWebSocketActor(out))
-}
-
-// pass the message to the talk to ksql actor, and let it handle outputtnig
-class MyWebSocketActor(out: ActorRef) extends Actor {
-
-  private val talkToKSqlActor: ActorRef = context.actorOf(Props(new TalkToKSqlActor(out)))
-
-  def receive = {
-    case msg: String =>
-      talkToKSqlActor ! msg
-  }
-}
-
-// pls talk back to the original actor bro
-class TalkToKSqlActor(out: ActorRef) extends Actor with ActorLogging {
-
-  import MediaTypes._
+class ReceiveFromKSQLActor(out: ActorRef) extends Actor with ActorLogging {
 
   implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-
-  val receiver : ActorRef = system.actorOf(Receiver.props, "receiver")
+  implicit val materializer = ActorMaterializer(ActorMaterializerSettings(context.system))
 
   override def receive: Receive = {
-    /*
-    case Select(query) =>
-      val json = Json.toJson(KsqlQuery(query))
-      val data = ByteString(json.toString())
-      Http().singleRequest(HttpRequest(HttpMethods.POST,
-        uri = "http://localhost:8080/query",
-        entity = HttpEntity(`application/json`, data)
-      ))
-        .pipeTo(receiver)
-        */
-    case msg: String =>
-      out ! ("I received your message: " + msg)
+    case HttpResponse(StatusCodes.OK, headers, entity, _) =>
+      entity.dataBytes.runForeach { byteString: ByteString =>
+        val body = byteString.utf8String
+        Try(Json.parse(body)).map { jsValue: JsValue =>
+          KSQLResponse.reads.reads(jsValue) match {
+            case JsSuccess(value, _) =>
+              out ! ("woohoo success" + value.toString)
+            case JsError(errors) =>
+              out ! ("boooo it didn't work " + errors)
+          }
+        }
+      }
+    case resp@HttpResponse(code, _, _, _) =>
+      out ! ("Request failed, response code: " + code)
+      resp.discardEntityBytes()
   }
+}
+
+object ReceiveFromKSQLActor {
+  def props: Props = Props[ReceiveFromKSQLActor]
 }
