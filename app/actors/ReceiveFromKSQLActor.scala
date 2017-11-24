@@ -1,5 +1,7 @@
 package actors
 
+import javax.inject.Inject
+
 import akka.actor.Actor
 import akka.actor.ActorLogging
 import akka.actor.ActorRef

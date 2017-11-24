@@ -22,7 +22,7 @@ import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
+class QueryKSQLActor(out: ActorRef, uri: String) extends Actor with ActorLogging {
 
   import MediaTypes._
 
@@ -39,7 +39,7 @@ class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
           val json = Json.toJson(KsqlQuery(value.sql))
           val data = ByteString(json.toString())
           Http().singleRequest(HttpRequest(HttpMethods.POST,
-            uri = "http://10.127.119.68:8080/query",
+            uri = uri,
             entity = HttpEntity(`application/json`, data)
           )).pipeTo(receiver)
         case JsError(errors) =>
@@ -49,5 +49,5 @@ class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
 }
 
 object QueryKSQLActor {
-  def props(out: ActorRef): Props = Props(new QueryKSQLActor(out))
+  def props(out: ActorRef, uri: String): Props = Props(new QueryKSQLActor(out, uri))
 }
