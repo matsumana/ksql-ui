@@ -3,3 +3,5 @@
 target/
 /node_modules/
 public/javascripts/bundle.js
+RUNNING_PID
+logs/

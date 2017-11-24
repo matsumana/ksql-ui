@@ -77,6 +77,6 @@ lazy val root = (project in file("."))
 clean := (clean dependsOn yarnInstall).value
 yarnInstall := (yarnInstall dependsOn removeNodeModules).value
 
-assembly := (assembly dependsOn yarnBuildProd).value
+packageZipTarball in Universal <<= packageZipTarball in Universal dependsOn yarnBuildProd
 yarnBuildProd := (yarnBuildProd dependsOn yarnTest).value
 yarnTest := (yarnTest dependsOn yarnLint).value
