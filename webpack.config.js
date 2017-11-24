@@ -2,9 +2,9 @@ const webpack = require('webpack');
 const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 module.exports = {
-  entry: "./ui/src/main/javascript/index.ts",
+  entry: "./ui/src/index.ts",
   output: {
-    path: `${__dirname}/public/javascripts`,
+    path: `${__dirname}/target/web/public/main/javascripts`,
     filename: 'bundle.js'
   },
   module: {
@@ -53,6 +53,7 @@ module.exports = {
 };
 
 if (process.env.NODE_ENV === 'production') {
+  module.exports.output.path = `${__dirname}/public/javascripts`;
   module.exports.devtool = false;
 
   // http://vue-loader.vuejs.org/en/workflow/production.html

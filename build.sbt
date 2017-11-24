@@ -8,8 +8,8 @@ lazy val yarnTest = taskKey[Unit]("yarn test")
 lazy val yarnBuildProd = taskKey[Unit]("yarn build for production")
 
 lazy val root = (project in file("."))
-    .enablePlugins(PlayScala)
-    .settings(
+  .enablePlugins(PlayScala)
+  .settings(
     inThisBuild(List(
       organization := "info.matsumana",
       scalaVersion := "2.12.3"
@@ -85,6 +85,6 @@ lazy val root = (project in file("."))
 clean := (clean dependsOn yarnInstall).value
 yarnInstall := (yarnInstall dependsOn removeNodeModules).value
 
-assembly := (assembly dependsOn yarnBuildProd).value
+packageZipTarball in Universal <<= packageZipTarball in Universal dependsOn yarnBuildProd
 yarnBuildProd := (yarnBuildProd dependsOn yarnTest).value
 yarnTest := (yarnTest dependsOn yarnLint).value
