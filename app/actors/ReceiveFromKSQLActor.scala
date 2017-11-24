@@ -1,7 +1,5 @@
 package actors
 
-import javax.inject.Inject
-
 import akka.actor.Actor
 import akka.actor.ActorLogging
 import akka.actor.ActorRef
@@ -38,7 +36,14 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
                   out ! Json.toJson(ResponseTable(sequence, sql, 1, ksqlrow.columns))
                 case None =>
                   // In this case, 'errorMessage' will definitely be defined.
-                  out ! Json.obj("errors" -> value.errorMessage.get)
+                  val errorMessage = value.errorMessage.get
+                  // If we get an error about the limit being reached, simply stop.
+                  if (errorMessage.message.startsWith("LIMIT")) {
+                    System.out.println("stopping myself!")
+                    context.stop(self)
+                  } else {
+                    out ! Json.obj("errors" -> value.errorMessage.get)
+                  }
               }
             case JsError(errors) =>
               out ! Json.obj("errors" -> errors.toString())
