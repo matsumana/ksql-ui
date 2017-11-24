@@ -31,14 +31,20 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
         Try(Json.parse(body)).map { jsValue: JsValue =>
           KSQLResponse.reads.reads(jsValue) match {
             case JsSuccess(value, _) =>
-              out ! Json.toJson(ResponseTable(sequence, sql, 1, value.row.get.columns))
+              value.row match {
+                case Some(ksqlrow) =>
+                  out ! Json.toJson(ResponseTable(sequence, sql, 1, ksqlrow.columns))
+                case None =>
+                  // In this case, 'errorMessage' will definitely be defined.
+                  out ! Json.obj("errors" -> value.errorMessage.get)
+              }
             case JsError(errors) =>
               out ! Json.obj("errors" -> errors.toString())
           }
         }
       }
     case resp@HttpResponse(code, _, _, _) =>
-      out ! ("Request failed, response code: " + code)
+      out ! Json.obj("error" -> ("Request failed, response code: " + code))
       resp.discardEntityBytes()
   }
 }

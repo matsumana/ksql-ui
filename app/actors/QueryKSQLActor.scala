@@ -29,14 +29,12 @@ class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
 
-  // TODO: Is it incorrect to make a new actor every time? Not sure.....
-
   // TODO: receive correct class from FE
   override def receive: Receive = {
     case request: JsValue =>
       APIRequest.format.reads(request) match {
         case JsSuccess(value, path) =>
-          System.out.println("hi did we ever get here")
+          // TODO: Is it incorrect to make a new actor every time? Not sure.....
           val receiver = context.actorOf(Props(new ReceiveFromKSQLActor(out, value.sequence, value.sql)))
           val json = Json.toJson(KsqlQuery(value.sql))
           val data = ByteString(json.toString())
@@ -45,7 +43,7 @@ class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
             entity = HttpEntity(`application/json`, data)
           )).pipeTo(receiver)
         case JsError(errors) =>
-          System.out.println("Bad Request: " + errors)
+          out ! Json.obj("msg" -> "bad request!", "errors" -> errors.toString())
       }
   }
 }
