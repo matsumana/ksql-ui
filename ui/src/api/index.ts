@@ -33,7 +33,6 @@ export class Api {
   submit(store: ActionContext<State, State>, sequence: number, sql: string, callback: () => void) {
     this.store = store;
 
-    console.log('submit!');
     const requeset = new Req();
     requeset.sequence = sequence;
     requeset.sql = sql;
