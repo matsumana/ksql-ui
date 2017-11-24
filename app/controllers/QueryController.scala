@@ -17,14 +17,14 @@ import play.api.mvc._
   */
 @Singleton
 class QueryController @Inject()
-  (cc: ControllerComponents, config: Configuration)
+  (cc: ControllerComponents)
   (implicit system: ActorSystem, mat: Materializer)
   extends AbstractController(cc) {
 
   // TODO: make this use typed request / response types
   def query() = WebSocket.accept[JsValue, JsValue] { request =>
     ActorFlow.actorRef { out =>
-      QueryKSQLActor.props(out, config.get[String]("ksql.uri"))
+      QueryKSQLActor.props(out, sys.env.getOrElse("KSQL_API_SERVER", "http://localhost:8080"))
     }
   }
 }

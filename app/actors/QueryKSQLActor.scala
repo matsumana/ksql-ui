@@ -39,7 +39,7 @@ class QueryKSQLActor(out: ActorRef, uri: String) extends Actor with ActorLogging
           val json = Json.toJson(KsqlQuery(value.sql))
           val data = ByteString(json.toString())
           Http().singleRequest(HttpRequest(HttpMethods.POST,
-            uri = uri,
+            uri = uri + "/query",
             entity = HttpEntity(`application/json`, data)
           )).pipeTo(receiver)
         case JsError(errors) =>
