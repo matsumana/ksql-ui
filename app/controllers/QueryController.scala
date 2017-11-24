@@ -6,13 +6,12 @@ import javax.inject.Singleton
 import actors.QueryKSQLActor
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import akka.stream.scaladsl.Flow
-import akka.stream.scaladsl.Sink
-import akka.stream.scaladsl.Source
+import models.APIRequest
+import models.ResponseTable
+import play.api.libs.json.JsValue
 import play.api.libs.streams.ActorFlow
+import play.api.mvc.WebSocket.MessageFlowTransformer
 import play.api.mvc._
-
-import scala.concurrent.duration._
 
 /**
   * Handle queries sent by the user.
@@ -22,7 +21,9 @@ import scala.concurrent.duration._
 class QueryController @Inject() (cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer)
   extends AbstractController(cc) {
 
-  def query() = WebSocket.accept[String, String] { request =>
+  //implicit val messageFlowTransformer = MessageFlowTransformer.jsonMessageFlowTransformer[APIRequest, ResponseTable]
+
+  def query() = WebSocket.accept[JsValue, JsValue] { request =>
     ActorFlow.actorRef { out =>
       QueryKSQLActor.props(out)
     }

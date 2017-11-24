@@ -5,41 +5,44 @@ import akka.actor.ActorLogging
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
 import akka.actor.Props
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpEntity
-import akka.http.scaladsl.model.HttpMethods
-import akka.http.scaladsl.model.HttpRequest
-import akka.http.scaladsl.model.MediaTypes
-import akka.pattern.pipe
+import akka.actor._
+import akka.http.scaladsl.model._
 import akka.stream.ActorMaterializer
+import akka.stream.ActorMaterializerSettings
 import akka.util.ByteString
-import models.ksql.KsqlQuery
+import models.ResponseTable
+import models.ksql.KSQLResponse
+import play.api.libs.json.JsError
+import play.api.libs.json.JsSuccess
+import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.Try
 
-class QueryKSQLActor(out: ActorRef) extends Actor with ActorLogging {
-
-  import MediaTypes._
+class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Actor with ActorLogging {
 
   implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
+  implicit val materializer = ActorMaterializer(ActorMaterializerSettings(context.system))
 
-  // TODO: Is it incorrect to make a new actor every time? Not sure.....
-  val receiver : ActorRef = context.actorOf(Props(new ReceiveFromKSQLActor(out)))
-
-  // TODO: receive correct class from FE
   override def receive: Receive = {
-    case query: String =>
-      val json = Json.toJson(KsqlQuery(query))
-      val data = ByteString(json.toString())
-      Http().singleRequest(HttpRequest(HttpMethods.POST,
-        uri = "http://10.127.119.68:8080/query",
-        entity = HttpEntity(`application/json`, data)
-      )).pipeTo(receiver)
+    case HttpResponse(StatusCodes.OK, headers, entity, _) =>
+      entity.dataBytes.runForeach { byteString: ByteString =>
+        val body = byteString.utf8String
+        Try(Json.parse(body)).map { jsValue: JsValue =>
+          KSQLResponse.reads.reads(jsValue) match {
+            case JsSuccess(value, _) =>
+              out ! Json.toJson(ResponseTable(sequence, sql, 1, value.row.get.columns))
+            case JsError(errors) =>
+              out ! Json.obj("errors" -> errors.toString())
+          }
+        }
+      }
+    case resp@HttpResponse(code, _, _, _) =>
+      out ! ("Request failed, response code: " + code)
+      resp.discardEntityBytes()
   }
 }
 
-object QueryKSQLActor {
-  def props(out: ActorRef): Props = Props(new QueryKSQLActor(out))
+object ReceiveFromKSQLActor {
+  def props: Props = Props[ReceiveFromKSQLActor]
 }
