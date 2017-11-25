@@ -2,11 +2,11 @@ package models
 
 import play.api.libs.json.{ Json, OFormat }
 
-case class APIRequest(
+case class ApiRequest(
                        sequence: Int,
                        sql: String
                      )
 
-object APIRequest {
-  implicit val format: OFormat[APIRequest] = Json.format[APIRequest]
+object ApiRequest {
+  implicit val format: OFormat[ApiRequest] = Json.format[ApiRequest]
 }

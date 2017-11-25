@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.{ Inject, Singleton }
 
-import actors.QueryKSQLActor
+import actors.QueryKsqlActor
 import akka.actor.ActorSystem
 import akka.stream.Materializer
 import play.api.libs.json.JsValue
@@ -20,7 +20,7 @@ class QueryController @Inject()(cc: ControllerComponents)(implicit system: Actor
   // TODO: make this use typed request / response types
   def query() = WebSocket.accept[JsValue, JsValue] { request =>
     ActorFlow.actorRef { out =>
-      QueryKSQLActor.props(out, sys.env.getOrElse("KSQL_API_SERVER", "http://localhost:8080"))
+      QueryKsqlActor.props(out, sys.env.getOrElse("KSQL_API_SERVER", "http://localhost:8080"))
     }
   }
 }
