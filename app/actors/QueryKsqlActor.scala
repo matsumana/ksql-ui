@@ -6,13 +6,13 @@ import akka.http.scaladsl.model.{ HttpEntity, HttpMethods, HttpRequest, MediaTyp
 import akka.pattern.pipe
 import akka.stream.ActorMaterializer
 import akka.util.ByteString
-import models.APIRequest
+import models.ApiRequest
 import models.ksql.KsqlQuery
 import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class QueryKSQLActor(out: ActorRef, uri: String) extends Actor with ActorLogging {
+class QueryKsqlActor(out: ActorRef, uri: String) extends Actor with ActorLogging {
 
   import MediaTypes._
 
@@ -22,10 +22,10 @@ class QueryKSQLActor(out: ActorRef, uri: String) extends Actor with ActorLogging
   // TODO: receive correct class from FE
   override def receive: Receive = {
     case request: JsValue =>
-      APIRequest.format.reads(request) match {
+      ApiRequest.format.reads(request) match {
         case JsSuccess(value, path) =>
           // TODO: Is it incorrect to make a new actor every time? Not sure.....
-          val receiver = context.actorOf(Props(new ReceiveFromKSQLActor(out, value.sequence, value.sql)))
+          val receiver = context.actorOf(Props(new ReceiveFromKsqlActor(out, value.sequence, value.sql)))
           val json = Json.toJson(KsqlQuery(value.sql))
           val data = ByteString(json.toString())
           Http().singleRequest(HttpRequest(HttpMethods.POST,
@@ -38,6 +38,6 @@ class QueryKSQLActor(out: ActorRef, uri: String) extends Actor with ActorLogging
   }
 }
 
-object QueryKSQLActor {
-  def props(out: ActorRef, uri: String): Props = Props(new QueryKSQLActor(out, uri))
+object QueryKsqlActor {
+  def props(out: ActorRef, uri: String): Props = Props(new QueryKsqlActor(out, uri))
 }

@@ -5,13 +5,13 @@ import akka.http.scaladsl.model._
 import akka.stream.{ ActorMaterializer, ActorMaterializerSettings }
 import akka.util.ByteString
 import models.ResponseTable
-import models.ksql.KSQLResponse
+import models.ksql.KsqlResponse
 import play.api.Logger
 import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
 
 import scala.util.Try
 
-class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Actor with ActorLogging {
+class ReceiveFromKsqlActor(out: ActorRef, sequence: Int, sql: String) extends Actor with ActorLogging {
 
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer(ActorMaterializerSettings(context.system))
@@ -23,7 +23,7 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
       entity.dataBytes.runForeach { byteString: ByteString =>
         val body = byteString.utf8String
         Try(Json.parse(body)).map { jsValue: JsValue =>
-          KSQLResponse.reads.reads(jsValue) match {
+          KsqlResponse.reads.reads(jsValue) match {
             case JsSuccess(value, _) =>
               value.row match {
                 case Some(ksqlrow) =>
@@ -50,6 +50,6 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
   }
 }
 
-object ReceiveFromKSQLActor {
-  def props: Props = Props[ReceiveFromKSQLActor]
+object ReceiveFromKsqlActor {
+  def props: Props = Props[ReceiveFromKsqlActor]
 }
