@@ -1,12 +1,10 @@
 package controllers
 
-import javax.inject.Inject
-import javax.inject.Singleton
+import javax.inject.{ Inject, Singleton }
 
 import actors.QueryKSQLActor
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import play.api.Configuration
 import play.api.libs.json.JsValue
 import play.api.libs.streams.ActorFlow
 import play.api.mvc._
@@ -16,9 +14,7 @@ import play.api.mvc._
   * Uses websockets!
   */
 @Singleton
-class QueryController @Inject()
-  (cc: ControllerComponents)
-  (implicit system: ActorSystem, mat: Materializer)
+class QueryController @Inject()(cc: ControllerComponents)(implicit system: ActorSystem, mat: Materializer)
   extends AbstractController(cc) {
 
   // TODO: make this use typed request / response types
