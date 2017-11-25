@@ -82,3 +82,17 @@ $ sbt clean universal:packageZipTarball
 $ tar xvf ksql-ui-x.x.x.tgz
 $ APPLICATION_SECRET=your_secret KSQL_API_SERVER=http://your_ksql_server ./ksql-ui-x.x.x/bin/ksql-ui -Dlogger.resource=logback-prod.xml
 ```
+
+# How to launch with Docker
+
+## docker build
+
+```
+$ docker build -t ksql-ui .
+```
+
+## docker run
+
+```
+$ docker run -p 9000:9000 -e APPLICATION_SECRET=your_secret -e KSQL_API_SERVER=http://your_ksql_server ksql-ui
+```
