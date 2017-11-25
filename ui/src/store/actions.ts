@@ -4,6 +4,7 @@ import { ACTION } from './action-types';
 import { Api } from '../api';
 import { Sandbox } from '../api/sandbox';
 import { State } from './State';
+import { ResponseBase } from './model/ResponseBase';
 
 const sandbox = new Sandbox();
 const api = new Api();
@@ -37,8 +38,17 @@ const actions = <ActionTree<State, any>> {
   // },
   [ACTION.SUBMIT](store: ActionContext<State, State>) {
     api.submit(store, store.state.sequence, store.state.sql, () => {
-      store.commit(MUTATION.SUBMIT);
+      const row: ResponseBase = {
+        sequence: store.state.sequence,
+        sql: store.state.sql,
+        mode: -1,
+      };
+
+      store.commit(MUTATION.SUBMIT, row);
     });
+  },
+  [ACTION.WS_ON_MESSAGE](store: ActionContext<State, State>, json: string) {
+    store.commit(MUTATION.WS_ON_MESSAGE, json);
   },
 };
 

@@ -14,11 +14,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bulma": "^0.6.1",
+    "lodash": "^4.17.4",
     "vue": "^2.5.2",
     "vue-bulma-brace": "^0.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.85",
     "@types/mocha": "^2.2.44",
     "@types/power-assert": "^1.4.29",
     "css-loader": "^0.28.7",

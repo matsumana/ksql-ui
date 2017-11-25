@@ -1,6 +1,6 @@
 import { ActionContext } from 'vuex';
 import { State } from '../store/State';
-import { MUTATION } from '../store/mutation-types';
+import { ACTION } from '../store/action-types';
 import { Request as Req } from '../store/model/Request';
 
 const WS_URL = `ws://${window.location.host}/query`;
@@ -26,7 +26,7 @@ export class Api {
     };
 
     this.ws.onmessage = (ev: MessageEvent) => {
-      this.store.commit(MUTATION.WS_ON_MESSAGE, ev.data);
+      this.store.dispatch(ACTION.WS_ON_MESSAGE, ev.data);
     };
   }
 

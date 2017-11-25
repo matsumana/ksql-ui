@@ -7,18 +7,10 @@
         <br>
         <div>Result</div>
         <table class="table is-bordered is-striped is-narrow">
-          <thead>
-          <tr>
-            <th></th>
-            <th v-for="col in title">
-              {{ col }}
-            </th>
-          </tr>
-          </thead>
           <tbody>
           <tr v-for="(row, index) in data">
             <td>
-              {{ index + 1 }}
+              <b>{{ index + 1 }}</b>
             </td>
             <td v-for="(col, index) in row">
               {{ col }}
