@@ -1,22 +1,13 @@
 package actors
 
-import akka.actor.Actor
-import akka.actor.ActorLogging
-import akka.actor.ActorRef
-import akka.actor.ActorSystem
-import akka.actor.Props
-import akka.actor._
+import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props, _ }
 import akka.http.scaladsl.model._
-import akka.stream.ActorMaterializer
-import akka.stream.ActorMaterializerSettings
+import akka.stream.{ ActorMaterializer, ActorMaterializerSettings }
 import akka.util.ByteString
 import models.ResponseTable
 import models.ksql.KSQLResponse
 import play.api.Logger
-import play.api.libs.json.JsError
-import play.api.libs.json.JsSuccess
-import play.api.libs.json.JsValue
-import play.api.libs.json.Json
+import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
 
 import scala.util.Try
 
@@ -53,7 +44,7 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
           }
         }
       }
-    case resp@HttpResponse(code, _, _, _) =>
+    case resp @ HttpResponse(code, _, _, _) =>
       out ! Json.obj("error" -> ("Request failed, response code: " + code))
       resp.discardEntityBytes()
   }

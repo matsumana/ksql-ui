@@ -1,24 +1,14 @@
 package actors
 
-import akka.actor.Actor
-import akka.actor.ActorLogging
-import akka.actor.ActorRef
-import akka.actor.ActorSystem
-import akka.actor.Props
+import akka.actor.{ Actor, ActorLogging, ActorRef, ActorSystem, Props }
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpEntity
-import akka.http.scaladsl.model.HttpMethods
-import akka.http.scaladsl.model.HttpRequest
-import akka.http.scaladsl.model.MediaTypes
+import akka.http.scaladsl.model.{ HttpEntity, HttpMethods, HttpRequest, MediaTypes }
 import akka.pattern.pipe
 import akka.stream.ActorMaterializer
 import akka.util.ByteString
 import models.APIRequest
 import models.ksql.KsqlQuery
-import play.api.libs.json.JsError
-import play.api.libs.json.JsSuccess
-import play.api.libs.json.JsValue
-import play.api.libs.json.Json
+import play.api.libs.json.{ JsError, JsSuccess, JsValue, Json }
 
 import scala.concurrent.ExecutionContext.Implicits.global
 

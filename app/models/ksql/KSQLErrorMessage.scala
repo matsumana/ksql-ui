@@ -1,7 +1,6 @@
 package models.ksql
 
-import play.api.libs.json.Json
-import play.api.libs.json.OFormat
+import play.api.libs.json.{ Json, OFormat }
 
 import scala.collection.immutable
 
