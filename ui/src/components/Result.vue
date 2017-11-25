@@ -13,7 +13,6 @@
         :sequence="result.sequence"
         :sql="result.sql"
         :mode="result.mode"
-        :title="result.title"
         :data="result.data">
       </result-table>
     </div>

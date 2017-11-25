@@ -14,8 +14,5 @@ export default class ResultTable extends Vue {
   readonly mode: number;
 
   @Prop()
-  readonly title: string[];
-
-  @Prop()
   readonly data: any[][];
 }
