@@ -12,6 +12,7 @@ import akka.stream.ActorMaterializerSettings
 import akka.util.ByteString
 import models.ResponseTable
 import models.ksql.KSQLResponse
+import play.api.Logger
 import play.api.libs.json.JsError
 import play.api.libs.json.JsSuccess
 import play.api.libs.json.JsValue
@@ -41,7 +42,7 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
                   val errorMessage = value.errorMessage.get
                   // If we get an error about the limit being reached, simply stop.
                   if (errorMessage.message.startsWith("LIMIT")) {
-                    System.out.println("stopping myself!")
+                    Logger.debug("stopping myself!")
                     context.stop(self)
                   } else {
                     out ! Json.obj("errors" -> value.errorMessage.get)

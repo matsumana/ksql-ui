@@ -31,4 +31,4 @@ RUN rm -rf ~/.ivy2/cache && \
 
 EXPOSE 9000
 
-CMD ["/root/ksql-ui/bin/ksql-ui"]
+CMD ["/root/ksql-ui/bin/ksql-ui", "-Dlogger.resource=logback-prod.xml"]
