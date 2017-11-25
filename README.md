@@ -31,9 +31,12 @@ $ yarn install
 
 # How to launch in local
 
+Specify the your KSQL server with the environment variable `KSQL_API_SERVER`
+If the environment variable `KSQL_API_SERVER` is not set, it will connect to `http://localhost:8080`
+
 ```
 $ cd /path/to/ksql-ui
-$ sbt
+$ KSQL_API_SERVER=http://your_ksql_server sbt
 [info] Loading global plugins from /path/to/.sbt/0.13/plugins
 [info] Loading project definition from /path/to/ksql-ui/project
 [info] Set current project to ksql-ui (in build file:/path/to/ksql-ui/)
@@ -76,5 +79,5 @@ $ sbt clean universal:packageZipTarball
 
 ```
 $ tar xvf ksql-ui-x.x.x.tgz
-$ APPLICATION_SECRET=your_secret ./ksql-ui-x.x.x/bin/ksql-ui
+$ APPLICATION_SECRET=your_secret KSQL_API_SERVER=http://your_ksql_server ./ksql-ui-x.x.x/bin/ksql-ui
 ```
