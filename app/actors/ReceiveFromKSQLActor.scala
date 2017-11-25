@@ -25,6 +25,8 @@ class ReceiveFromKSQLActor(out: ActorRef, sequence: Int, sql: String) extends Ac
   implicit val materializer = ActorMaterializer(ActorMaterializerSettings(context.system))
 
   override def receive: Receive = {
+    case Status.Failure(e) =>
+      out ! Json.obj("msg" -> "Error in HTTP Request.", "errors" -> e.toString)
     case HttpResponse(StatusCodes.OK, headers, entity, _) =>
       entity.dataBytes.runForeach { byteString: ByteString =>
         val body = byteString.utf8String
