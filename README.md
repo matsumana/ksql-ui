@@ -32,6 +32,7 @@ $ yarn install
 # How to launch in local
 
 Specify the your KSQL server with the environment variable `KSQL_API_SERVER`
+
 If the environment variable `KSQL_API_SERVER` is not set, it will connect to `http://localhost:8080`
 
 ```
