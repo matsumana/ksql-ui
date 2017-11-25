@@ -80,5 +80,5 @@ $ sbt clean universal:packageZipTarball
 
 ```
 $ tar xvf ksql-ui-x.x.x.tgz
-$ APPLICATION_SECRET=your_secret KSQL_API_SERVER=http://your_ksql_server ./ksql-ui-x.x.x/bin/ksql-ui
+$ APPLICATION_SECRET=your_secret KSQL_API_SERVER=http://your_ksql_server ./ksql-ui-x.x.x/bin/ksql-ui -Dlogger.resource=logback-prod.xml
 ```
