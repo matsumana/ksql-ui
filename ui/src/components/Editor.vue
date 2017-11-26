@@ -14,12 +14,6 @@
       <div class="control is-grouped">
         <div class="control">
           <a class="button is-primary" @click="submit">Submit</a>
-          <!--
-          Acutually, brace is having itself value internally. so brace has methods both setValue and getValue.
-          However, Brace.vue doen't provide a method calling brace's setValue method.
-          Therefore, I can't implemente this feature.
-          -->
-          <!--<a class="button" @click="cancel">Cancel</a>-->
         </div>
       </div>
     </div>
