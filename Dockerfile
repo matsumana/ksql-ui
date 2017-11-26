@@ -1,6 +1,6 @@
-FROM openjdk:8
+# for build
+FROM openjdk:8 AS build-env
 
-ENV NODE_VERSION 8.9.1
 ENV SBT_VERSION 0.13.15
 
 # install Node.js
@@ -20,14 +20,18 @@ RUN curl -L -O https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
 RUN mkdir /root/src
 COPY . /root/src
 RUN cd /root/src && \
-    sbt clean universal:packageZipTarball && \
-    tar xvf target/universal/ksql-ui-*.tgz -C /root && \
-    mv /root/ksql-ui-* /root/ksql-ui && \
-    rm -rf /root/src
+    sbt clean universal:packageZipTarball
 
-# delete cache
-RUN rm -rf ~/.ivy2/cache && \
-    yarn cache clean
+
+
+# for runtime
+FROM openjdk:8
+
+COPY --from=build-env /root/src/target/universal/ksql-ui-*.tgz /root/ksql-ui.tgz
+
+RUN tar xvf /root/ksql-ui.tgz -C /root && \
+    mv /root/ksql-ui-* /root/ksql-ui && \
+    rm /root/ksql-ui.tgz
 
 EXPOSE 9000
 
