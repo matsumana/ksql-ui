@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       scalaVersion := "2.12.3"
     )),
     name := "ksql-ui",
-    version := "0.1.0",
+    version := "0.1.1-SNAPSHOT",
     libraryDependencies ++= Seq(
       guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
